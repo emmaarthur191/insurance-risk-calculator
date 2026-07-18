@@ -22,15 +22,19 @@ env/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Raw and Cleaned Datasets (Prevent pushing large data files)
-Insurance.csv
-Copy of Companies Ins.Data.xlsx
-Insurance_cleaned.csv
+# Intermediate Cleaned Datasets & Temp Uploads
 test_batch.csv
 scored_underwriting_roster.csv
+Insurance.csv
 
 # Compiled Presentations and Reports (Can be regenerated locally)
 board_presentation_executive.pptx
 
 # GitKraken / Local Kilo Folder
 .kilo/
+
+# Scratch & Deployment Scripts
+generate_deck.py
+git_deploy_automate.py
+scratch_copy_logo.py
+scratch_git_init.py

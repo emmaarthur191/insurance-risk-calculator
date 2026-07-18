@@ -95,29 +95,3 @@ with col2:
     """, unsafe_allow_html=True)
 
 st.sidebar.success("All datasets successfully loaded and cached!")
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("### Git Deployment Portal")
-if st.sidebar.button("Push to GitHub", key="git_deploy_btn"):
-    with st.sidebar.status("Deploying to GitHub...", expanded=True) as status:
-        import subprocess
-        from pathlib import Path
-        
-        cwd = Path(__file__).parent.resolve()
-        status.write("Running git_deploy_automate.py script...")
-        
-        result = subprocess.run(
-            ["python", "git_deploy_automate.py"],
-            cwd=str(cwd),
-            capture_output=True,
-            text=True
-        )
-        
-        if result.returncode == 0:
-            status.update(label="Successfully pushed to GitHub!", state="complete")
-            st.sidebar.success("Deployment complete!")
-            st.sidebar.code(result.stdout)
-        else:
-            status.update(label="Deployment failed!", state="error")
-            st.sidebar.error("Error during Git push:")
-            st.sidebar.code(result.stderr + "\n" + result.stdout)

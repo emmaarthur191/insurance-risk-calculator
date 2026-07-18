@@ -8,19 +8,34 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def _resolve_paths():
-    local_csv = Path("Insurance.csv")
+    local_csv = Path("Insurance_cleaned.csv")
     local_excel = Path("Copy of Companies Ins.Data.xlsx")
-    csv_path = local_csv if local_csv.exists() else Path(r"C:\Users\snype\Downloads\Insurance.csv")
+    csv_path = local_csv if local_csv.exists() else Path(r"C:\Users\snype\Downloads\Insurance_cleaned.csv")
     excel_path = local_excel if local_excel.exists() else Path(r"C:\Users\snype\Downloads\Copy of Companies Ins.Data.xlsx")
     return csv_path, excel_path
 
 # Setup data loading (cached)
 @st.cache_data
 def load_raw_data():
+    # Automatically copy files from Downloads to root if they exist there but not locally
+    try:
+        downloads_csv = Path(r"C:\Users\snype\Downloads\Insurance_cleaned.csv")
+        downloads_excel = Path(r"C:\Users\snype\Downloads\Copy of Companies Ins.Data.xlsx")
+        
+        if downloads_csv.exists() and not Path("Insurance_cleaned.csv").exists():
+            import shutil
+            shutil.copy2(downloads_csv, Path("Insurance_cleaned.csv"))
+            
+        if downloads_excel.exists() and not Path("Copy of Companies Ins.Data.xlsx").exists():
+            import shutil
+            shutil.copy2(downloads_excel, Path("Copy of Companies Ins.Data.xlsx"))
+    except Exception:
+        pass
+
     csv_path, excel_path = _resolve_paths()
     
     if not csv_path.exists():
-        raise FileNotFoundError(f"Could not find Insurance.csv locally or at {csv_path}. Please place it in the project root.")
+        raise FileNotFoundError(f"Could not find Insurance_cleaned.csv locally or at {csv_path}. Please place it in the project root.")
     if not excel_path.exists():
         raise FileNotFoundError(f"Could not find Copy of Companies Ins.Data.xlsx locally or at {excel_path}. Please place it in the project root.")
         
