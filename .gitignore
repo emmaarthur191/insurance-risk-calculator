@@ -1,0 +1,36 @@
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Raw and Cleaned Datasets (Prevent pushing large data files)
+Insurance.csv
+Copy of Companies Ins.Data.xlsx
+Insurance_cleaned.csv
+test_batch.csv
+scored_underwriting_roster.csv
+
+# Compiled Presentations and Reports (Can be regenerated locally)
+board_presentation_executive.pptx
+
+# GitKraken / Local Kilo Folder
+.kilo/

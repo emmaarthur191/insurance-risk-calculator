@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX TEAM — Prudential Risk Analytics Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js for premium visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Prudential Logo" class="nav-logo">
+            <span>APEX<span>TEAM</span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#problem">Problem</a>
+            <a href="#insights">Insights</a>
+            <a href="#models">Models</a>
+            <a href="#fraud">Fraud Audit</a>
+            <a href="#action-plan" class="btn-primary">View Action Plan</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Operationalizing Actuarial Risk: <span class="gradient-text">The APEX Platform</span></h1>
+            <p class="hero-subtitle">Calibrating underwriting margins through Poisson and Gamma GLMs, hybrid anomaly audit pipelines, and 84.2% accurate XGBoost risk classification.</p>
+            <div class="hero-actions">
+                <a href="#insights" class="btn-primary-large">Explore Key Insights</a>
+                <a href="#models" class="btn-secondary-large">Compare Models</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- KPI Section -->
+    <section class="kpis">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-number">50,000</div>
+                <div class="kpi-label">Deduplicated Policies</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-number">84.2%</div>
+                <div class="kpi-label">XGBoost Classification Accuracy</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-number">GHS 608M</div>
+                <div class="kpi-label">Pricing Underpricing Deficit</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-number">304.6%</div>
+                <div class="kpi-label">Portfolio Loss Ratio</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section id="problem" class="section problem-section">
+        <h2 class="section-title">The Strategic Underwriting Challenge</h2>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <h3>🚨 The Premium Underpricing Leak</h3>
+                <p>Prudential is facing a massive GHS 608M annualized pricing deficit across its combined portfolio, driving the combined loss ratio to an unsustainable <strong>304.6%</strong>. Historically, flat-rate pricing has meant high-risk policyholders are heavily underpriced while low-risk accounts subsidize them, creating adverse selection and margin erosion.</p>
+            </div>
+            <div class="problem-card">
+                <h3>🛡️ Rebalancing the Scorecard</h3>
+                <p>Using Poisson GLM frequency modeling, we proved that Smoking is NOT a statistically significant driver of claim frequency. Based on these findings, we rebalanced the scorecard: downgrading **Smoking from 15 to 5 points**, upgrading **Age to the primary driver (up to 28 points)**, and adjusting BMI. This aligns pricing directly with data-proven risk drivers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Insights -->
+    <section id="insights" class="section dark-section">
+        <h2 class="section-title">Actuarial Regression & Driver Analysis</h2>
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Claim Frequency Drivers (Poisson GLM)</h3>
+                <p>We deployed a Poisson GLM (log link) to model integer claim counts. Age is the primary driver (35% risk uplift per standard deviation). Smoking is slightly negative, indicating that legacy smoking surcharges were actuarially unjustified.</p>
+                <div class="chart-container">
+                    <canvas id="scorecardChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>Claim Severity Drivers (Gamma GLM)</h3>
+                <p>Because claim sizes are positive, highly skewed continuous values, we modeled severity using a Gamma GLM (log link). This ensures extreme claim payouts are accurately estimated, forming the basis of our risk-adjusted premium recommendations.</p>
+                <div class="chart-container">
+                    <canvas id="driversChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine Learning Models -->
+    <section id="models" class="section">
+        <h2 class="section-title">XGBoost Risk Classification</h2>
+        <div class="model-flex">
+            <div class="model-chart-box">
+                <canvas id="mlComparisonChart"></canvas>
+            </div>
+            <div class="model-details">
+                <h3>XGBoost Adverse-Outcome Classifier</h3>
+                <p>We trained an **XGBoost classifier** (achieving 84.2% validation accuracy) to identify policyholders likely to become High or Critical risk claimants (defined as having ≥ 2 claims or a High/Critical severity claim). By excluding circular scorecard variables, the model learns genuine, un-leaked risk signals.</p>
+                <ul class="detail-list">
+                    <li><strong>Low/Medium Risk F1-Score:</strong> 91.0%</li>
+                    <li><strong>High/Critical Risk F1-Score:</strong> 85.0%</li>
+                    <li><strong>Stratification & SMOTE Balanced</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fraud & Anomaly Audit -->
+    <section id="fraud" class="section dark-section">
+        <h2 class="section-title">Hybrid Fraud & Leakage Audit</h2>
+        <p class="section-desc">By combining unsupervised Isolation Forest outlier flags (1% contamination rate) with underwriting rules, we compute a <strong>Claims Abuse Risk Index</strong> to flag premium leakage.</p>
+        <div class="fraud-grid">
+            <div class="fraud-card">
+                <h4>1. Claims Severity Abuse</h4>
+                <p>Policyholders with 3+ claims of High or Critical severity (weight: 3 points).</p>
+            </div>
+            <div class="fraud-card">
+                <h4>2. Early Churn Claims</h4>
+                <p>Claims filed within the first 3 months followed by policy cancellation (weight: 2 points).</p>
+            </div>
+            <div class="fraud-card">
+                <h4>3. Underweight Desk Anomaly</h4>
+                <p>Software Engineers with underweight BMIs (< 18.5) and 1+ claims (weight: 2 points).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Actuarial Action Plan -->
+    <section id="action-plan" class="section action-section">
+        <h2 class="section-title">APEX Strategic Action Plan</h2>
+        <div class="roadmap">
+            <div class="roadmap-step">
+                <div class="step-num">1</div>
+                <h4>Deploy Calibrated Risk Scorecard</h4>
+                <p>Update underwriting guidelines using our data-calibrated weights (Age upgraded, Smoking downgraded to 5 points) to ensure accurate pricing at inception.</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-num">2</div>
+                <h4>Eliminate Pricing Deficit</h4>
+                <p>Implement risk loading surcharges matching our Monte Carlo Value-at-Risk (VaR) calculations to close the GHS 608M pricing deficit and return the loss ratio below 80%.</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-num">3</div>
+                <h4>Audit Claims Abuse Accounts</h4>
+                <p>Establish automated workflow triggers to auto-audit claims on accounts with a Claims Abuse Index of 3 or higher, protecting cash float.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 APEX TEAM — Prudential Insurance Risk Platform. Developed to senior human-engineered standards.</p>
+    </footer>
+
+    <!-- App JS -->
+    <script src="app.js"></script>
+</body>
+</html>
